@@ -1,10 +1,10 @@
-### RPM lcg root 6.14.09
+### RPM lcg root 6.17.03
 ## INITENV +PATH PYTHON27PATH %{i}/lib
 ## INITENV +PATH PYTHON3PATH %{i}/lib
 ## INITENV SET ROOTSYS %{i}
-%define tag b525ba64cc3804a6b54e8a77ed591d87f86f1b5d
-%define branch cms/v6-14-00-patches/5e217f2
-%define github_user cms-sw
+%define tag 35be7df3c3a29325deb1d92214c73b66888694db
+%define branch reve-selection
+%define github_user osschar
 Source: git+https://github.com/%{github_user}/root.git?obj=%{branch}/%{tag}&export=%{n}-%{realversion}&output=/%{n}-%{realversion}-%{tag}.tgz
 
 %define islinux %(case %{cmsos} in (slc*|fc*) echo 1 ;; (*) echo 0 ;; esac)
@@ -47,9 +47,14 @@ cmake ../%{n}-%{realversion} \
   -DCMAKE_Fortran_COMPILER=gfortran \
   -DCMAKE_LINKER=ld \
   -DCMAKE_VERBOSE_MAKEFILE=TRUE \
-  -Droot7=ON \
+  -Droot7=ON \  
+  -DCMAKE_CXX_STANDARD=17 \
+  -Dhttp=ON \
+  -Dwebui=ON \
+  -Dtmva=ON \
   -Dfail-on-missing=ON \
   -Dgnuinstall=OFF \
+  -Darrow=OFF \
   -Droofit=ON \
   -Dvdt=OFF \
   -Dhdfs=OFF \
@@ -70,7 +75,6 @@ cmake ../%{n}-%{realversion} \
   -Dminuit2=ON \
   -Dmathmore=ON \
   -Dexplicitlink=ON \
-  -Dtable=ON \
   -Dbuiltin_tbb=OFF \
   -Dbuiltin_pcre=OFF \
   -Dbuiltin_freetype=OFF \
@@ -80,7 +84,6 @@ cmake ../%{n}-%{realversion} \
   -Dbuiltin_xxhash=ON \
   -Darrow=OFF \
   -DGSL_CONFIG_EXECUTABLE="$(which gsl-config)" \
-  -Dcxx17=ON \
   -Dssl=ON \
   -DOPENSSL_ROOT_DIR="${OPENSSL_ROOT}" \
   -DOPENSSL_INCLUDE_DIR="${OPENSSL_ROOT}/include" \
